@@ -15,11 +15,13 @@ FROM
     LEFT JOIN AMB_CAD_ORGAO o ON tl.cdg_orgao = o.cdg_orgao -- Puxa o orgao
     LEFT JOIN FIN_Contratos fc ON rl.N_contrato = fc.Contrato -- Puxa o contrato
 WHERE 
-    rl.num_licenca IS NOT NULL
-    AND rl.num_licenca <> ''
-    AND rl.N_contrato NOT IN (
+    rl.N_contrato NOT IN (
         'A licitar', 'TG-RS', 'TIC-RA', 'TIC-RB', 
         'TIC-RM', 'TIL-RN', 'TIN-RJ', 'TIN-RM', 
         'TIO-RV', 'TIP-RG'
     )
 	AND o.sigla_orgao <> 'PM'
+    AND	N_Licitacao IS NOT NULL AND
+	N_Licitacao <> ''
+	AND Situacao_Contrato IN ('Em Execução','Suspenso')
+    AND Coordenacao NOT IN ('Baixada','Localizadas 1', 'Localizadas 2')
