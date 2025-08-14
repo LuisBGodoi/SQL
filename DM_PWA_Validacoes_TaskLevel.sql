@@ -1,11 +1,29 @@
+--DROP VIEW Qualidadedados_Opcoes;
+
 CREATE VIEW Qualidadedados_Opcoes
 AS
 SELECT 
     Contrato,
     ProjectName,
     TaskOutlineNumber,
+    TaskEarlyStart,
+    TaskEarlyFinish,
     TaskName,
     TaskOutlineLevel,
+    CASE
+        WHEN TaskName_Level_3 = 'ESTAÇÃO ELEVATÓRIA DE ESGOTO' OR TaskName_Level_3 = 'ESTAÇÃO DE TRATAMENTO DE ESGOTO'
+        THEN 'LOCALIZADA'
+        WHEN TaskName_Level_3 IN ('LINHA DE RECALQUE', 
+                    'COLETOR TRONCO',
+                    'COLETOR TRONCO SECUNDÁRIO', 
+                    'INTERLIGAÇÃO', 
+                    'REDE COLETORA DE ESGOTO',
+                    'CONDUTO FORÇADO', 
+                    'EMISSÁRIO', 
+                    'INTERCEPTOR')
+        THEN 'LINEAR'
+        ELSE 'N/A'
+    END AS 'Linear/Localizada',
     TaskName_Level_3,
     TaskName_Level_4,
     TaskName_Level_5,
